@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>유종현 | 정형외과 전문의</title>
-  <meta name="description" content="정형외과 전문의 유종현 — 정확한 진단과 정성스러운 진료를 추구합니다." />
+  <title>유종현 | 정형외과 전문의 · 전주 수병원</title>
+  <meta name="description" content="전주 수병원 정형외과 전문의 유종현 — 척추·관절·외상, 정확한 진단과 정성스러운 진료를 추구합니다." />
   <style>
     :root {
-      --ivory: #f7f4ef;       /* 배경 아이보리 */
+      --ivory: #f5f6f3;          /* 더 맑고 차분한 오프화이트 */
       --paper: #ffffff;
-      --ink: #1c2530;         /* 딥 슬레이트 텍스트 */
-      --ink-soft: #5b6675;
-      --line: #e6ded2;
-      --gold: #a9885d;        /* 절제된 골드 포인트 */
-      --gold-deep: #8a6c45;
-      --navy: #1f2d3d;
+      --ink: #1d2e34;            /* 딥 티얼-슬레이트 */
+      --ink-soft: #5a6a70;
+      --line: #e4e6e1;
+      --gold: #b08a55;           /* 절제된 골드 포인트 */
+      --gold-deep: #8c6c3c;
+      --gold-soft: #ecd9a8;     /* 진료(시간표) 골드 */
+      --sage: #5f867f;           /* 차분한 세이지 보조 포인트 */
+      --navy: #163b44;           /* 티얼-네이비 (신뢰감 + 맑음) */
       --radius: 16px;
       --shadow: 0 24px 60px rgba(28, 37, 48, .10);
       --serif: "Apple Garamond", "Garamond", Georgia, "Times New Roman", serif;
@@ -32,7 +34,12 @@
     .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
     a { color: inherit; }
 
-    /* divider eyebrow */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-deep));
+      z-index: 60; transition: width .1s linear;
+    }
+
     .eyebrow {
       font-size: .74rem; font-weight: 700; letter-spacing: .32em; text-transform: uppercase;
       color: var(--gold-deep);
@@ -42,6 +49,15 @@
       margin-top: 12px;
     }
 
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: .08s; }
+    .reveal.d2 { transition-delay: .16s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
     /* ── Navbar ── */
     header.nav {
       position: sticky; top: 0; z-index: 30;
@@ -50,137 +66,236 @@
       border-bottom: 1px solid var(--line);
     }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 74px; }
-    .logo { font-family: var(--serif); font-size: 1.35rem; letter-spacing: .04em; font-weight: 600; }
+    .logo { font-family: var(--serif); font-size: 1.32rem; letter-spacing: .04em; font-weight: 600; }
     .logo .dot { color: var(--gold); }
-    .nav-links { display: flex; gap: 34px; }
-    .nav-links a { text-decoration: none; color: var(--ink-soft); font-size: .92rem; font-weight: 500; letter-spacing: .02em; transition: color .2s; }
+    .logo small { display: block; font-family: var(--sans); font-size: .62rem; letter-spacing: .22em; color: var(--ink-soft); font-weight: 600; margin-top: 1px; }
+    .nav-links { display: flex; gap: 26px; }
+    .nav-links a { text-decoration: none; color: var(--ink-soft); font-size: .9rem; font-weight: 500; letter-spacing: .01em; transition: color .2s; position: relative; }
+    .nav-links a::after { content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--gold); transition: width .25s ease; }
     .nav-links a:hover { color: var(--gold-deep); }
-    @media (max-width: 680px) { .nav-links { display: none; } }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold-deep); }
+    @media (max-width: 880px) { .nav-links { display: none; } }
 
     /* ── Hero ── */
     .hero {
-      position: relative; overflow: hidden;
-      padding: 120px 0 110px;
+      position: relative; overflow: hidden; padding: 92px 0;
       background:
         radial-gradient(640px 360px at 88% -8%, rgba(169, 136, 93, .14), transparent 70%),
         linear-gradient(180deg, #fbf9f5 0%, var(--ivory) 100%);
     }
-    .hero::before {
-      content: ""; position: absolute; right: -160px; top: 40px;
-      width: 460px; height: 460px; border-radius: 50%;
-      border: 1px solid rgba(169, 136, 93, .25);
-    }
-    .hero::after {
-      content: ""; position: absolute; right: -90px; top: 130px;
-      width: 300px; height: 300px; border-radius: 50%;
-      border: 1px solid rgba(169, 136, 93, .18);
-    }
-    .hero-inner { position: relative; z-index: 2; max-width: 660px; }
-    .hero h1 {
-      font-family: var(--serif); font-weight: 600; letter-spacing: .01em;
-      font-size: clamp(2.6rem, 6vw, 4.1rem); line-height: 1.12; margin: 22px 0 0;
-    }
+    .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: 50px; align-items: center; }
+    @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .hero-text { max-width: 620px; }
+    .hero-text > * { opacity: 0; transform: translateY(20px); animation: heroIn .8s cubic-bezier(.22,.61,.36,1) forwards; }
+    .hero-text > *:nth-child(1) { animation-delay: .05s; }
+    .hero-text > *:nth-child(2) { animation-delay: .16s; }
+    .hero-text > *:nth-child(3) { animation-delay: .27s; }
+    .hero-text > *:nth-child(4) { animation-delay: .38s; }
+    .hero-text > *:nth-child(5) { animation-delay: .49s; }
+    @keyframes heroIn { to { opacity: 1; transform: none; } }
+    .hero .affil { display: inline-block; margin-bottom: 4px; font-size: .82rem; font-weight: 700; color: var(--gold-deep); letter-spacing: .04em; }
+    .hero h1 { font-family: var(--serif); font-weight: 600; letter-spacing: .01em; font-size: clamp(2.4rem, 5.4vw, 3.7rem); line-height: 1.14; margin: 18px 0 0; }
     .hero h1 .accent { color: var(--gold-deep); }
-    .hero .role { margin-top: 18px; font-size: 1.05rem; color: var(--navy); font-weight: 600; letter-spacing: .04em; }
-    .hero .lead { margin-top: 22px; font-size: 1.16rem; color: var(--ink-soft); }
-    .cta { margin-top: 38px; display: flex; gap: 16px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
-      font-weight: 600; font-size: .98rem; letter-spacing: .02em;
-      padding: 15px 30px; border-radius: 999px; transition: transform .16s, box-shadow .22s, background .2s, color .2s;
-    }
+    .hero .role { margin-top: 18px; font-size: 1.05rem; color: var(--navy); font-weight: 600; letter-spacing: .03em; }
+    .hero .lead { margin-top: 22px; font-size: 1.12rem; color: var(--ink-soft); }
+    .cta { margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-weight: 600; font-size: .98rem; letter-spacing: .02em; padding: 15px 30px; border-radius: 999px; transition: transform .16s, box-shadow .22s, background .2s, color .2s; }
     .btn-primary { background: var(--navy); color: #f6f1e8; box-shadow: 0 14px 30px rgba(31, 45, 61, .25); }
     .btn-primary:hover { transform: translateY(-2px); background: #16212e; }
     .btn-ghost { border: 1px solid var(--gold); color: var(--gold-deep); }
     .btn-ghost:hover { background: rgba(169, 136, 93, .08); }
 
+    .hero-photo { position: relative; justify-self: center; opacity: 0; transform: translateY(20px) scale(.98); animation: heroIn .9s cubic-bezier(.22,.61,.36,1) .35s forwards; }
+    .hero-photo .frame {
+      position: relative; width: clamp(244px, 32vw, 322px); aspect-ratio: 420 / 540;
+      border-radius: 26px; overflow: hidden;
+      background: linear-gradient(180deg, #eef1f4, #e3e7ec);
+      box-shadow: 0 30px 70px rgba(22, 59, 68, .22); border: 6px solid var(--paper);
+      outline: 1px solid var(--line);
+      transition: transform .35s cubic-bezier(.22,.61,.36,1);
+    }
+    .hero-photo:hover .frame { transform: translateY(-4px) rotate(0deg); }
+    .hero-photo .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    /* 살짝 기울어진 골드 매트 액자 */
+    .hero-photo::before { content: ""; position: absolute; inset: -14px; border-radius: 32px; border: 1.5px solid rgba(176, 138, 85, .5); transform: rotate(-4deg); z-index: -1; }
+    .hero-photo::after { content: ""; position: absolute; inset: -14px; border-radius: 32px; border: 1.5px solid rgba(95, 134, 127, .28); transform: rotate(3deg); z-index: -2; }
+    .hero-photo .badge { position: absolute; left: 50%; bottom: -18px; transform: translateX(-50%); background: var(--navy); color: #f6f1e8; white-space: nowrap; padding: 9px 20px; border-radius: 999px; font-size: .86rem; font-weight: 600; letter-spacing: .02em; box-shadow: 0 12px 26px rgba(31, 45, 61, .28); }
+    .hero-photo .badge b { color: var(--gold); font-weight: 700; }
+    @media (prefers-reduced-motion: reduce) { .hero-text > *, .hero-photo { opacity: 1; transform: none; animation: none; } }
+
     /* ── Section base ── */
-    section.block { padding: 92px 0; }
+    section.block { padding: 86px 0; }
     .block.alt { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .sec-head { margin-bottom: 46px; }
+    .sec-head { margin-bottom: 44px; }
     .sec-head h2 { font-family: var(--serif); font-weight: 600; font-size: 2.1rem; letter-spacing: .01em; margin-top: 16px; }
-    .sec-head p { color: var(--ink-soft); margin-top: 10px; max-width: 620px; }
+    .sec-head p { color: var(--ink-soft); margin-top: 10px; max-width: 640px; }
 
     /* ── About ── */
     .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: start; }
     @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
     .about-grid p { color: var(--ink-soft); margin-bottom: 16px; }
     .about-grid strong { color: var(--ink); font-weight: 600; }
-    .info-card {
-      background: var(--ivory); border: 1px solid var(--line); border-radius: var(--radius);
-      padding: 30px; box-shadow: var(--shadow);
-    }
+    .info-card { background: var(--ivory); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
     .info-row { display: flex; justify-content: space-between; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); }
     .info-row:last-child { border-bottom: none; }
     .info-row .k { color: var(--ink-soft); font-size: .9rem; letter-spacing: .03em; }
     .info-row .v { font-weight: 600; text-align: right; }
 
-    /* ── Cards grid (진료/관심) ── */
+    /* ── 진료 철학 ── */
+    .philosophy { background: linear-gradient(180deg, var(--ivory), #fbf9f5); }
+    .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 760px) { .flow { grid-template-columns: 1fr; } }
+    .flow-item { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 36px 30px 32px; }
+    .flow-item .step { font-family: var(--serif); font-size: 2.2rem; color: var(--gold); line-height: 1; letter-spacing: .04em; }
+    .flow-item h3 { font-size: 1.18rem; margin: 16px 0 10px; }
+    .flow-item p { color: var(--ink-soft); font-size: .96rem; }
+
+    /* ── 진료 분야 ── */
     .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     @media (max-width: 760px) { .cards { grid-template-columns: 1fr; } }
-    .card {
-      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
-      padding: 34px 30px; transition: transform .18s, box-shadow .22s, border-color .2s;
-    }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 34px 30px; transition: transform .18s, box-shadow .22s, border-color .2s; }
     .block.alt .card { background: var(--ivory); }
     .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: rgba(169, 136, 93, .5); }
     .card .num { font-family: var(--serif); font-size: 1.1rem; color: var(--gold); letter-spacing: .1em; }
-    .card .ico { font-size: 1.7rem; margin-bottom: 12px; }
     .card h3 { font-size: 1.18rem; margin: 14px 0 10px; letter-spacing: .01em; }
     .card p { color: var(--ink-soft); font-size: .96rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
+    .chip { background: var(--ivory); border: 1px solid var(--line); border-radius: 999px; padding: 9px 18px; font-size: .92rem; font-weight: 600; color: var(--navy); transition: border-color .2s, color .2s, transform .15s; }
+    .chip:hover { border-color: var(--gold); color: var(--gold-deep); transform: translateY(-2px); }
+    .chip .b { color: var(--gold-deep); }
 
+    /* ── 진료시간표 ── */
+    .hours { background: linear-gradient(180deg, #fbf9f5, var(--ivory)); }
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--line); background: var(--paper); }
+    table.schedule { width: 100%; min-width: 680px; border-collapse: collapse; text-align: center; }
+    table.schedule thead th {
+      background: var(--navy); color: #f6f1e8; font-weight: 600; font-size: .98rem;
+      padding: 18px 10px; letter-spacing: .04em;
+    }
+    table.schedule thead th:first-child { background: #16212e; }
+    table.schedule tbody th {
+      background: var(--ivory); font-weight: 700; color: var(--ink);
+      padding: 20px 16px; white-space: nowrap; border-bottom: 1px solid var(--line); text-align: center;
+    }
+    table.schedule tbody th small { display: block; font-weight: 500; color: var(--ink-soft); font-size: .8rem; margin-top: 3px; }
+    table.schedule td { padding: 16px 10px; border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); }
+    table.schedule tbody tr:last-child td, table.schedule tbody tr:last-child th { border-bottom: none; }
+    .slot { display: inline-block; min-width: 58px; padding: 8px 14px; border-radius: 999px; font-size: .9rem; font-weight: 700; }
+    .slot.care { background: var(--gold-soft); color: var(--gold-deep); }
+    .slot.op { background: var(--navy); color: #f6f1e8; }
+    .slot.var { background: var(--paper); color: var(--ink-soft); border: 1px dashed var(--gold); font-weight: 600; }
+    .slot.off { color: #c4c0b8; font-weight: 600; }
+    .legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 22px; font-size: .9rem; color: var(--ink-soft); }
+    .legend span { display: inline-flex; align-items: center; gap: 8px; }
+    .legend .dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+    .legend .dot.care { background: var(--gold-soft); }
+    .legend .dot.op { background: var(--navy); }
+    .hours-notes { margin-top: 24px; padding: 22px 26px; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 12px; }
+    .hours-notes p { color: var(--ink-soft); font-size: .94rem; margin: 6px 0; }
+    .hours-notes p strong { color: var(--ink); }
+
+    /* ── 약력 & 학회 ── */
+    .career-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; }
+    @media (max-width: 820px) { .career-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .career-col h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+    .career-col h3 .mk { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+    .timeline { list-style: none; position: relative; padding-left: 24px; }
+    .timeline::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1.5px; background: linear-gradient(180deg, var(--gold), rgba(169,136,93,.25)); }
+    .timeline li { position: relative; padding: 0 0 16px 4px; color: var(--ink-soft); font-size: .97rem; }
+    .timeline li::before { content: ""; position: absolute; left: -24px; top: 9px; width: 9px; height: 9px; border-radius: 50%; background: var(--paper); border: 2px solid var(--gold); }
+    .timeline li:last-child { padding-bottom: 0; }
+    .timeline li strong { color: var(--ink); font-weight: 600; }
+    .timeline li.now::before { background: var(--gold); box-shadow: 0 0 0 4px rgba(169,136,93,.18); }
+    .timeline li.now { color: var(--ink); font-weight: 600; }
+    .society { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
+    @media (max-width: 480px) { .society { grid-template-columns: 1fr; } }
+    .society li { position: relative; padding-left: 18px; color: var(--ink-soft); font-size: .95rem; }
+    .society li::before { content: "·"; position: absolute; left: 4px; top: -1px; color: var(--gold); font-weight: 800; }
+    .society .edu-extra { margin-top: 20px; }
     .note-line { margin-top: 26px; font-size: .85rem; color: var(--ink-soft); font-style: italic; }
 
-    /* ── Contact ── */
-    .contact-card {
-      background: var(--navy); color: #ece5d8; border-radius: 22px;
-      padding: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;
-      box-shadow: 0 30px 70px rgba(31, 45, 61, .28);
-    }
+    /* ── 오시는 길 / 연락처 ── */
+    .contact-card { background: var(--navy); color: #ece5d8; border-radius: 22px; padding: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; box-shadow: 0 30px 70px rgba(31, 45, 61, .28); }
     @media (max-width: 680px) { .contact-card { grid-template-columns: 1fr; padding: 36px; } }
     .contact-card .c-title { font-family: var(--serif); font-size: 1.7rem; }
     .contact-card .c-sub { color: #b8ad99; margin-top: 10px; font-size: .98rem; }
+    .contact-card .c-depts { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .contact-card .c-depts span { font-size: .8rem; padding: 5px 12px; border: 1px solid rgba(236,229,216,.25); border-radius: 999px; color: #d8cdb8; }
     .contact-item { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, .12); }
     .contact-item:last-child { border-bottom: none; }
     .contact-item .label { display: block; color: #b8ad99; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 5px; }
-    .contact-item a, .contact-item span { color: #f6f1e8; text-decoration: none; font-size: 1.12rem; font-weight: 600; }
+    .contact-item a, .contact-item span { color: #f6f1e8; text-decoration: none; font-size: 1.08rem; font-weight: 600; }
     .contact-item a:hover { color: var(--gold); }
+
+    /* ── 지도 + 예약 바로가기 ── */
+    .map-area { margin-top: 30px; display: grid; grid-template-columns: 1.45fr 1fr; gap: 24px; align-items: stretch; }
+    @media (max-width: 800px) { .map-area { grid-template-columns: 1fr; } }
+    .map-frame { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); min-height: 320px; background: var(--paper); }
+    .map-frame iframe { width: 100%; height: 100%; min-height: 320px; border: 0; display: block; filter: saturate(.96); }
+    .book-panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 11px; justify-content: center; }
+    .book-panel h3 { font-family: var(--serif); font-size: 1.22rem; }
+    .book-panel .sub { color: var(--ink-soft); font-size: .9rem; margin-bottom: 6px; }
+    .book-btn { display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--line); text-decoration: none; font-weight: 600; color: var(--ink); transition: border-color .2s, transform .15s, background .2s; }
+    .book-btn:hover { transform: translateY(-2px); border-color: var(--gold); background: #fbfaf7; }
+    .book-btn .ic { flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: .98rem; font-weight: 800; color: #fff; }
+    .book-btn .ic.nv { background: #03c75a; }
+    .book-btn .ic.gg { background: #4285f4; }
+    .book-btn .ic.tel { background: var(--navy); }
+    .book-btn .tx small { display: block; font-weight: 500; color: var(--ink-soft); font-size: .8rem; margin-top: 1px; }
 
     /* ── Footer ── */
     footer { background: var(--ivory); border-top: 1px solid var(--line); text-align: center; padding: 44px 0 56px; }
     footer .logo { font-size: 1.15rem; }
     footer .copy { color: var(--ink-soft); font-size: .86rem; margin-top: 10px; }
     footer .disclaim { display: inline-block; margin-top: 12px; font-size: .76rem; color: #9aa2ad; }
+
+    .to-top { position: fixed; right: 26px; bottom: 26px; z-index: 40; width: 48px; height: 48px; border-radius: 50%; background: var(--navy); color: #f6f1e8; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 12px 28px rgba(31, 45, 61, .3); opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity .25s, transform .25s, background .2s; }
+    .to-top.show { opacity: 1; pointer-events: auto; transform: none; }
+    .to-top:hover { background: #16212e; }
   </style>
 </head>
 <body>
 
+  <div class="progress-bar" id="progressBar"></div>
+
   <!-- ── Navbar ── -->
   <header class="nav">
     <div class="wrap nav-inner">
-      <div class="logo">유종현<span class="dot">.</span></div>
+      <div class="logo">유종현<span class="dot">.</span><small>전주 수병원 정형외과</small></div>
       <nav class="nav-links">
         <a href="#about">소개</a>
+        <a href="#philosophy">진료 철학</a>
         <a href="#fields">진료 분야</a>
-        <a href="#interests">관심 분야</a>
-        <a href="#contact">연락처</a>
+        <a href="#hours">진료시간</a>
+        <a href="#career">약력 · 학회</a>
+        <a href="#contact">오시는 길</a>
       </nav>
     </div>
   </header>
 
   <!-- ── Hero ── -->
   <section class="hero">
-    <div class="wrap hero-inner">
-      <span class="eyebrow">Orthopaedic Surgeon</span>
-      <h1>정성스러운 진료로<br /><span class="accent">건강한 일상</span>을 돕습니다</h1>
-      <p class="role">정형외과 전문의 · 전주수병원</p>
-      <p class="lead">
-        정확한 진단과 환자 한 분 한 분에 대한 깊은 이해를 바탕으로,
-        신뢰할 수 있는 정형외과 진료를 추구하는 의사 유종현입니다.
-      </p>
-      <div class="cta">
-        <a href="#contact" class="btn btn-primary">진료 문의하기</a>
-        <a href="#about" class="btn btn-ghost">소개 보기</a>
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <span class="affil">전주 수병원 · 정형외과</span>
+        <span class="eyebrow">Orthopaedic Surgeon</span>
+        <h1>정성스러운 진료로<br /><span class="accent">건강한 일상</span>을 돕습니다</h1>
+        <p class="role">정형외과 전문의 · 전주 수병원</p>
+        <p class="lead">
+          척추·관절·외상을 두루 진료하며, 정확한 진단과 환자 한 분 한 분에 대한
+          깊은 이해를 바탕으로 최선을 다하는 정형외과 전문의 유종현입니다.
+        </p>
+        <div class="cta">
+          <a href="#hours" class="btn btn-primary">진료시간 보기</a>
+          <a href="#career" class="btn btn-ghost">약력 보기</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="frame">
+          <img src="profile.png" alt="전주 수병원 정형외과 전문의 유종현 과장" />
+        </div>
+        <span class="badge">정형외과 전문의 <b>유종현</b></span>
       </div>
     </div>
   </section>
@@ -188,30 +303,59 @@
   <!-- ── About ── -->
   <section class="block" id="about">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <span class="eyebrow">About</span>
         <h2>의사 소개</h2>
         <p>임상 현장에서 쌓아 온 경험으로, 환자 중심의 진료를 이어가고 있습니다.</p>
       </div>
       <div class="about-grid">
-        <div>
+        <div class="reveal">
           <p>
-            <strong>전주수병원 정형외과 전문의</strong>로 근무하며, 근골격계 질환과
-            외상에 대한 진료를 담당하고 있습니다. 환자분의 증상을 충분히 듣고
+            <strong>전주 수병원 정형외과 전문의</strong>로 근무하며, 척추·관절·외상 등
+            근골격계 질환 전반을 진료하고 있습니다. 환자분의 증상을 충분히 듣고
             정확히 진단하는 것을 진료의 출발점으로 삼습니다.
           </p>
           <p>
-            치료는 한 번으로 끝나지 않습니다. 진단부터 치료, 그리고 회복과 재활까지
-            <strong>전 과정을 함께한다는 마음</strong>으로 환자 한 분 한 분을 살핍니다.
+            서울성모병원에서 슬관절·견주관절·고관절 전임의 과정과 Master course를 수료하고,
+            척추 양방향내시경 등 다양한 분야의 연수를 거쳤습니다. 치료는 한 번으로 끝나지 않습니다.
+            진단부터 치료, 회복과 재활까지 <strong>전 과정을 함께한다는 마음</strong>으로
+            환자 한 분 한 분을 살핍니다.
           </p>
-          <!-- ▼ 약력·세부 전문분야는 직접 채워 주세요 (예: 전문의 취득 연도, 학회 활동, 수련 병원 등) -->
-          <p class="note-line">※ 학력·약력·세부 전문분야 등 상세 경력은 이 자리에 추가해 주세요.</p>
         </div>
-        <div class="info-card">
+        <div class="info-card reveal d1">
           <div class="info-row"><span class="k">성명</span><span class="v">유종현</span></div>
           <div class="info-row"><span class="k">전문 분야</span><span class="v">정형외과</span></div>
-          <div class="info-row"><span class="k">소속</span><span class="v">전주수병원</span></div>
-          <div class="info-row"><span class="k">직위</span><span class="v">정형외과 전문의 (봉직의)</span></div>
+          <div class="info-row"><span class="k">현 소속</span><span class="v">전주 수병원</span></div>
+          <div class="info-row"><span class="k">직위</span><span class="v">정형외과 전문의</span></div>
+          <div class="info-row"><span class="k">세부 진료</span><span class="v">척추 · 관절 · 외상</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 진료 철학 ── -->
+  <section class="block philosophy" id="philosophy">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Philosophy</span>
+        <h2>진료 철학</h2>
+        <p>좋은 치료는 좋은 듣기에서 시작된다고 믿습니다. 제가 환자분을 대하는 세 가지 원칙입니다.</p>
+      </div>
+      <div class="flow">
+        <div class="flow-item reveal">
+          <div class="step">01</div>
+          <h3>충분히 듣습니다</h3>
+          <p>증상의 시작과 일상의 불편함까지, 환자분의 이야기를 끝까지 듣는 것에서 진료를 시작합니다.</p>
+        </div>
+        <div class="flow-item reveal d1">
+          <div class="step">02</div>
+          <h3>정확히 진단합니다</h3>
+          <p>꼭 필요한 검사와 근거에 기반해, 통증의 원인을 정확히 짚어내는 것을 가장 중요하게 생각합니다.</p>
+        </div>
+        <div class="flow-item reveal d2">
+          <div class="step">03</div>
+          <h3>회복까지 함께합니다</h3>
+          <p>치료가 끝이 아니라, 일상으로 온전히 돌아가는 재활과 관리까지 곁에서 함께합니다.</p>
         </div>
       </div>
     </div>
@@ -220,78 +364,199 @@
   <!-- ── 진료 분야 ── -->
   <section class="block alt" id="fields">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <span class="eyebrow">Practice</span>
         <h2>진료 분야</h2>
-        <p>정형외과에서 다루는 대표적인 진료 영역입니다. 실제 진료 항목에 맞게 자유롭게 수정해 주세요.</p>
+        <p>척추부터 관절, 외상까지 — 근골격계 전반을 폭넓게 진료합니다.</p>
       </div>
-      <!-- ▼ 아래 카드 내용은 예시입니다. 본인 진료 분야에 맞게 수정/추가/삭제하세요. -->
       <div class="cards">
-        <div class="card">
+        <div class="card reveal">
           <span class="num">01</span>
-          <h3>관절 질환</h3>
-          <p>무릎·어깨·고관절 등 관절 통증과 퇴행성 질환의 진단 및 치료.</p>
+          <h3>척추 질환</h3>
+          <p>목·허리 통증과 척추 질환을 진료하며, 척추 양방향내시경 수술 등 다양한 술기를 연수했습니다.</p>
         </div>
-        <div class="card">
+        <div class="card reveal d1">
           <span class="num">02</span>
-          <h3>척추 · 통증</h3>
-          <p>목·허리 통증과 척추 질환에 대한 보존적 치료와 관리.</p>
+          <h3>관절 내시경</h3>
+          <p>견주관절·슬관절 전임의 과정을 수료하고, 어깨·무릎 등의 관절 내시경(관절경)으로 관절 질환을 진단·치료합니다.</p>
         </div>
-        <div class="card">
+        <div class="card reveal d2">
           <span class="num">03</span>
-          <h3>외상 · 골절</h3>
-          <p>스포츠 손상, 골절 등 근골격계 외상의 진단과 치료.</p>
+          <h3>인공관절 · 외상</h3>
+          <p>고관절·슬관절 인공관절과 골절 등 근골격계 외상을 진료합니다 (Master course 수료).</p>
         </div>
       </div>
-      <p class="note-line">※ 위 항목은 편집용 예시이며, 실제 진료 내용으로 교체하실 수 있습니다.</p>
+      <div class="chips reveal d1">
+        <span class="chip"><span class="b">#</span> 수부</span>
+        <span class="chip"><span class="b">#</span> 족부</span>
+        <span class="chip"><span class="b">#</span> 어깨</span>
+        <span class="chip"><span class="b">#</span> 무릎</span>
+        <span class="chip"><span class="b">#</span> 척추</span>
+        <span class="chip"><span class="b">#</span> 관절 내시경</span>
+        <span class="chip"><span class="b">#</span> 인공관절</span>
+      </div>
     </div>
   </section>
 
-  <!-- ── 관심 분야 ── -->
-  <section class="block" id="interests">
+  <!-- ── 진료시간표 (신규) ── -->
+  <section class="block hours" id="hours">
     <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">Beyond the Clinic</span>
-        <h2>관심 분야</h2>
-        <p>진료실 밖에서 제가 즐겨 탐구하는 세 가지입니다.</p>
+      <div class="sec-head reveal">
+        <span class="eyebrow">Schedule</span>
+        <h2>진료시간 안내</h2>
+        <p>유종현 과장의 주간 진료·수술 일정입니다. 방문 전 시간을 확인해 주세요.</p>
       </div>
-      <div class="cards">
-        <div class="card">
-          <div class="ico">🏎️</div>
-          <h3>스포츠카</h3>
-          <p>정교한 공학과 속도의 미학. 잘 설계된 기계가 주는 몰입을 좋아합니다.</p>
-        </div>
-        <div class="card">
-          <div class="ico">📈</div>
-          <h3>AI 자동 주식매매</h3>
-          <p>데이터와 알고리즘으로 감정을 배제한 투자. 자동 매매 시스템을 연구합니다.</p>
-        </div>
-        <div class="card">
-          <div class="ico">🤖</div>
-          <h3>AI 활용법</h3>
-          <p>AI를 업무와 일상에 접목해 더 효율적으로 일하는 방법을 탐구합니다.</p>
-        </div>
+      <div class="table-wrap reveal">
+        <table class="schedule">
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>오전<small>08:30 ~ 12:30</small></th>
+              <td><span class="slot care">진료</span></td>
+              <td><span class="slot care">진료</span></td>
+              <td><span class="slot op">수술</span></td>
+              <td><span class="slot care">진료</span></td>
+              <td><span class="slot op">수술</span></td>
+              <td><span class="slot var">매주 변경</span></td>
+            </tr>
+            <tr>
+              <th>오후<small>13:30 ~ 17:30</small></th>
+              <td><span class="slot op">수술</span></td>
+              <td><span class="slot care">진료</span></td>
+              <td><span class="slot op">수술</span></td>
+              <td><span class="slot care">진료</span></td>
+              <td><span class="slot care">진료</span></td>
+              <td><span class="slot off">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend reveal d1">
+        <span><i class="dot care"></i> 진료</span>
+        <span><i class="dot op"></i> 수술</span>
+        <span>토요일 진료시간 : 08:30 ~ 12:30</span>
+      </div>
+      <div class="hours-notes reveal d1">
+        <p>· 진료과 및 담당의사의 사정에 따라 <strong>접수가 조기에 마감되거나 진료시간이 변경</strong>될 수 있습니다.</p>
+        <p>· <strong>매주 토요일은 진료의가 바뀌므로</strong>, 방문 전 원무과(<strong>063-251-7200</strong>)로 미리 연락해 주시면 감사하겠습니다.</p>
       </div>
     </div>
   </section>
 
-  <!-- ── 연락처 ── -->
+  <!-- ── 약력 & 학회 ── -->
+  <section class="block" id="career">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Career &amp; Academic</span>
+        <h2>약력 및 학회 활동</h2>
+        <p>수련과 연수, 그리고 학회 활동으로 이어 온 정형외과 의사로서의 발자취입니다.</p>
+      </div>
+      <div class="career-grid">
+        <div class="career-col reveal">
+          <h3><span class="mk"></span>학력 및 경력</h3>
+          <ul class="timeline">
+            <li class="now"><strong>현) 전주 수병원 정형외과 전문의</strong></li>
+            <li><strong>을지의과대학교</strong> 졸업</li>
+            <li><strong>서울성모병원</strong> 정형외과 전문의 취득</li>
+            <li>서울성모병원 정형외과 슬관절·견주관절 전임의 과정 수료</li>
+            <li>서울성모병원 견관절·슬관절·고관절 Master course 수료</li>
+            <li>을지병원 족부 전임의 과정 수료</li>
+            <li>김포공항우리들병원 척추 수술 참관 연수</li>
+            <li>아시아 태평양 척추학회 연수</li>
+            <li>대전우리병원 척추 양방향내시경 수술 참관 연수</li>
+            <li>전) 서울스타병원 정형외과 부원장 · 척추수술 참관 연수</li>
+            <li>전) 어울림병원 정형외과 과장</li>
+            <li>전) 광명기대찬병원 정형외과 원장</li>
+            <li>전) 스마트병원 정형외과 과장</li>
+            <li>전) 전주고려병원 정형외과 과장</li>
+            <li>전) 전주한양병원 정형외과 원장</li>
+          </ul>
+        </div>
+        <div class="career-col reveal d1">
+          <h3><span class="mk"></span>학회 및 주요 활동</h3>
+          <ul class="society">
+            <li>대한 정형외과학회 정회원</li>
+            <li>대한 정형외과 의사회 정회원</li>
+            <li>대한 슬관절학회 정회원</li>
+            <li>대한 견주관절학회 정회원</li>
+            <li>대한 척추외과학회 정회원</li>
+            <li>대한 척추내시경학회 정회원</li>
+            <li>대한 골절학회 정회원</li>
+            <li>한국 근골격계초음파학회 정회원</li>
+            <li>대한 관절경학회 정회원</li>
+            <li>대한 정형통증의학회 정회원</li>
+            <li>대한 정형외과사이버학회 정회원</li>
+          </ul>
+          <ul class="society edu-extra">
+            <li>Asia Pacific Global Arthroplasty Course 이수</li>
+            <li>AO Principle Trauma Course 수료 (2014)</li>
+            <li>Zimmer Arthroplasty Workshop (2016)</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note-line">※ 본 약력·학회 정보는 제공해 주신 자료를 바탕으로 정리했습니다. 표기·문구는 자유롭게 수정하실 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- ── 오시는 길 / 연락처 ── -->
   <section class="block alt" id="contact">
     <div class="wrap">
-      <div class="contact-card">
+      <div class="contact-card reveal">
         <div>
-          <div class="c-title">진료 및 상담 문의</div>
-          <p class="c-sub">편하게 연락 주시면 정성껏 안내해 드리겠습니다.</p>
+          <div class="c-title">전주 수병원</div>
+          <p class="c-sub">최선을 다하는 진료로, 환자분께 최고의 의료 환경을 제공하고자 노력합니다.</p>
+          <div class="c-depts">
+            <span>정형외과</span><span>성형외과</span><span>마취통증의학과</span><span>가정의학과</span><span>영상의학과</span>
+          </div>
         </div>
         <div>
           <div class="contact-item">
             <span class="label">Location</span>
-            <span>전라북도 전주시 · 전주수병원</span>
+            <span>전북 전주시 완산구 서원로 63</span>
           </div>
           <div class="contact-item">
-            <span class="label">Contact</span>
-            <span>진료 문의는 병원으로 연락 주세요</span>
+            <span class="label">대표전화</span>
+            <a href="tel:063-251-7200">063-251-7200</a>
           </div>
+          <div class="contact-item">
+            <span class="label">Website</span>
+            <a href="http://www.soohospital.com" target="_blank" rel="noopener">www.soohospital.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 지도 + 예약 바로가기 -->
+      <div class="map-area">
+        <div class="map-frame reveal">
+          <iframe
+            src="https://maps.google.com/maps?q=%EC%A0%84%EB%B6%81%20%EC%A0%84%EC%A3%BC%EC%8B%9C%20%EC%99%84%EC%82%B0%EA%B5%AC%20%EC%84%9C%EC%9B%90%EB%A1%9C%2063%20%EC%A0%84%EC%A3%BC%EC%88%98%EB%B3%91%EC%9B%90&z=16&hl=ko&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="전주 수병원 위치 지도"></iframe>
+        </div>
+        <div class="book-panel reveal d1">
+          <h3>예약 · 바로가기</h3>
+          <p class="sub">아래에서 편한 방법으로 예약·문의하세요.</p>
+          <a class="book-btn" href="https://map.naver.com/p/entry/place/13265723" target="_blank" rel="noopener">
+            <span class="ic nv">N</span>
+            <span class="tx">네이버 지도 · 예약<small>플레이스에서 길찾기 · 예약</small></span>
+          </a>
+          <a class="book-btn" href="https://search.naver.com/search.naver?where=blog&query=%EC%A0%84%EC%A3%BC%EC%88%98%EB%B3%91%EC%9B%90" target="_blank" rel="noopener">
+            <span class="ic nv">B</span>
+            <span class="tx">네이버 블로그 후기<small>방문 후기 · 예약 글 보기</small></span>
+          </a>
+          <a class="book-btn" href="https://www.google.com/maps/search/%EC%A0%84%EC%A3%BC%EC%88%98%EB%B3%91%EC%9B%90" target="_blank" rel="noopener">
+            <span class="ic gg">G</span>
+            <span class="tx">구글 지도<small>길찾기 · 리뷰 보기</small></span>
+          </a>
+          <a class="book-btn" href="tel:063-251-7200">
+            <span class="ic tel">☎</span>
+            <span class="tx">전화 예약 · 문의<small>063-251-7200 (원무과)</small></span>
+          </a>
         </div>
       </div>
     </div>
@@ -301,10 +566,45 @@
   <footer>
     <div class="wrap">
       <div class="logo">유종현<span class="dot">.</span></div>
-      <div class="copy">© 2026 유종현 · 정형외과 전문의</div>
-      <span class="disclaim">※ 본 페이지는 AI 자율마스터 과정 실습용으로 제작된 예시입니다.</span>
+      <div class="copy">© 2026 유종현 · 전주 수병원 정형외과 전문의</div>
+      <span class="disclaim">※ 본 페이지는 AI 자율마스터 과정 실습용으로 제작된 소개 페이지입니다. (전주 수병원 공식 페이지가 아닙니다)</span>
     </div>
   </footer>
+
+  <button class="to-top" id="toTop" aria-label="맨 위로 이동">↑</button>
+
+  <script>
+    var progressBar = document.getElementById('progressBar');
+    var toTop = document.getElementById('toTop');
+    function onScroll() {
+      var h = document.documentElement;
+      var scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+      progressBar.style.width = (scrolled * 100) + '%';
+      if (h.scrollTop > 480) { toTop.classList.add('show'); } else { toTop.classList.remove('show'); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.15 });
+      reveals.forEach(function (el) { io.observe(el); });
+    } else { reveals.forEach(function (el) { el.classList.add('in'); }); }
+
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav-links a');
+    function spy() {
+      var pos = window.scrollY + 120;
+      var current = '';
+      sections.forEach(function (sec) { if (pos >= sec.offsetTop) { current = sec.id; } });
+      navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+    }
+    window.addEventListener('scroll', spy, { passive: true });
+    spy();
+  </script>
 
 </body>
 </html>
